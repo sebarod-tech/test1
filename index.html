@@ -1,0 +1,792 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Monitor WhatsApp</title>
+  <style>
+    :root {
+      --bg: #f5f7f8;
+      --panel: #ffffff;
+      --ink: #17212b;
+      --muted: #64717d;
+      --line: #dfe6ea;
+      --green: #18a558;
+      --green-bg: #e8f8ef;
+      --red: #d93025;
+      --red-bg: #fdecea;
+      --amber-bg: #fff7e6;
+      --shadow: 0 18px 45px rgba(23, 33, 43, .08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    button, input, select, textarea { font: inherit; }
+    button { border: 0; cursor: pointer; }
+
+    .app {
+      width: min(1420px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 24px 0 36px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 230px;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 42px;
+      height: 42px;
+      place-items: center;
+      border-radius: 10px;
+      color: #ffffff;
+      background: linear-gradient(135deg, #1db954, #128c7e);
+      font-weight: 800;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+    h1 { font-size: 24px; line-height: 1.2; }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 2px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 40px;
+      padding: 0 14px;
+      border-radius: 8px;
+      color: var(--ink);
+      background: var(--panel);
+      border: 1px solid var(--line);
+      font-weight: 700;
+      transition: transform .15s ease, border-color .15s ease;
+    }
+
+    .btn:hover { transform: translateY(-1px); border-color: #cbd6dc; }
+    .btn.primary { color: #ffffff; border-color: #128c7e; background: #128c7e; }
+    .btn.danger { color: #ffffff; border-color: var(--red); background: var(--red); }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(340px, .65fr);
+      gap: 18px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 18px 18px 0;
+    }
+
+    .panel-head h2 { font-size: 16px; }
+    .panel-body { padding: 18px; }
+
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .status-card {
+      padding: 18px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #fbfcfc;
+    }
+
+    .status-card.outage { border-color: #f2b8b5; background: var(--red-bg); }
+    .status-card.normal { border-color: #b8e8ca; background: var(--green-bg); }
+
+    .status-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .service-name { font-size: 18px; font-weight: 800; }
+    .service-kind { color: var(--muted); font-size: 13px; margin-top: 3px; }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      white-space: nowrap;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 800;
+      border: 1px solid transparent;
+    }
+
+    .badge.normal { color: #0f6f3d; background: #dff6e8; border-color: #aee3c3; }
+    .badge.outage { color: #a32118; background: #ffe0dd; border-color: #f6b7b2; }
+    .badge.manual { color: #694500; background: var(--amber-bg); border-color: #f1d394; }
+
+    .dot { width: 9px; height: 9px; border-radius: 50%; background: currentColor; }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .metric {
+      padding: 10px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .72);
+      border: 1px solid rgba(0, 0, 0, .05);
+    }
+
+    .metric span {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .metric strong { display: block; margin-top: 4px; font-size: 15px; }
+
+    .alert {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid #b8e8ca;
+      background: var(--green-bg);
+    }
+
+    .alert.outage { border-color: #f2b8b5; background: var(--red-bg); }
+    .alert-title { font-weight: 800; }
+    .alert-text { color: var(--muted); font-size: 13px; margin-top: 2px; }
+
+    .source-list { display: grid; gap: 10px; }
+
+    .source {
+      display: grid;
+      gap: 10px;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #fbfcfc;
+    }
+
+    .source h3 { font-size: 14px; }
+    .source p { color: var(--muted); font-size: 12px; line-height: 1.35; margin-top: 3px; }
+
+    .source-actions {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .mini {
+      min-height: 34px;
+      padding: 0 9px;
+      border-radius: 7px;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--ink);
+      background: #ffffff;
+      border: 1px solid var(--line);
+    }
+
+    .mini.ok { color: #0f6f3d; }
+    .mini.bad { color: #a32118; }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: minmax(140px, 1fr) minmax(150px, 1fr) minmax(220px, 2fr);
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .input, .select, .textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      color: var(--ink);
+      padding: 10px 11px;
+      outline: 0;
+    }
+
+    .textarea { min-height: 180px; resize: vertical; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 12px; }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 820px;
+      border-collapse: collapse;
+      background: #ffffff;
+    }
+
+    th, td {
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      font-size: 13px;
+    }
+
+    th {
+      color: var(--muted);
+      background: #f8fafb;
+      font-size: 11px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+    .empty { color: var(--muted); text-align: center; padding: 28px 14px; }
+
+    .footer-note {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .switch input { width: 18px; height: 18px; accent-color: #128c7e; }
+
+    @media (max-width: 1020px) {
+      .grid, .status-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 720px) {
+      .app { width: min(100% - 24px, 1420px); padding-top: 16px; }
+      .topbar, .panel-head, .alert { align-items: stretch; flex-direction: column; }
+      .actions { justify-content: stretch; }
+      .btn { flex: 1 1 160px; }
+      .metrics, .field-row, .source-actions { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">WA</div>
+        <div>
+          <h1>Monitor WhatsApp</h1>
+          <p class="subtitle">Panel gratuito para seguimiento asistido de WhatsApp común y Business</p>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" id="checkNow">Actualizar ahora</button>
+        <label class="switch"><input type="checkbox" id="autoCheck">Auto chequeo</label>
+        <button class="btn" id="exportJson">Exportar JSON</button>
+        <label class="btn" for="importJson">Importar JSON</label>
+        <input id="importJson" type="file" accept="application/json" hidden>
+      </div>
+    </header>
+
+    <section class="grid">
+      <div>
+        <section class="panel">
+          <div class="panel-head">
+            <h2>Estado del servicio</h2>
+            <span class="badge manual"><span class="dot"></span><span id="lastCheck">Sin chequeos todavía</span></span>
+          </div>
+          <div class="panel-body">
+            <div class="status-grid">
+              <article class="status-card normal" data-card="personal">
+                <div class="status-top">
+                  <div>
+                    <h3 class="service-name">WhatsApp común</h3>
+                    <p class="service-kind">Mensajería, llamadas, WhatsApp Web</p>
+                  </div>
+                  <span class="badge normal" data-badge="personal"><span class="dot"></span><span>Operativo</span></span>
+                </div>
+                <div class="metrics">
+                  <div class="metric"><span>Estado</span><strong data-state="personal">Normal</strong></div>
+                  <div class="metric"><span>Inicio caída</span><strong data-start="personal">-</strong></div>
+                  <div class="metric"><span>Duración</span><strong data-duration="personal">-</strong></div>
+                </div>
+              </article>
+
+              <article class="status-card normal" data-card="business">
+                <div class="status-top">
+                  <div>
+                    <h3 class="service-name">WhatsApp Business</h3>
+                    <p class="service-kind">App Business y plataforma empresarial</p>
+                  </div>
+                  <span class="badge normal" data-badge="business"><span class="dot"></span><span>Operativo</span></span>
+                </div>
+                <div class="metrics">
+                  <div class="metric"><span>Estado</span><strong data-state="business">Normal</strong></div>
+                  <div class="metric"><span>Inicio caída</span><strong data-start="business">-</strong></div>
+                  <div class="metric"><span>Duración</span><strong data-duration="business">-</strong></div>
+                </div>
+              </article>
+            </div>
+
+            <div class="alert" id="alertBox">
+              <div>
+                <p class="alert-title">Sin caídas detectadas</p>
+                <p class="alert-text">Cuando confirmes una caída desde alguna fuente, se guardará el incidente y se calculará el tiempo total al restablecerse.</p>
+              </div>
+              <button class="btn" id="resolveAll">Marcar todo normal</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel" style="margin-top:18px">
+          <div class="panel-head">
+            <h2>Registrar incidente</h2>
+            <span class="badge manual"><span class="dot"></span>Guardado local</span>
+          </div>
+          <div class="panel-body">
+            <div class="field-row">
+              <select class="select" id="serviceInput">
+                <option value="personal">WhatsApp común</option>
+                <option value="business">WhatsApp Business</option>
+                <option value="both">Ambos servicios</option>
+              </select>
+              <select class="select" id="sourceInput">
+                <option>X.com / hashtags</option>
+                <option>Downdetector</option>
+                <option>Google Noticias</option>
+                <option>Meta Status</option>
+                <option>Noticias web</option>
+                <option>Chequeo propio</option>
+              </select>
+              <input class="input" id="problemInput" placeholder="Problema detectado, por ejemplo: no envía mensajes">
+            </div>
+            <div class="actions" style="justify-content:flex-start">
+              <button class="btn danger" id="startIncident">Confirmar caída</button>
+              <button class="btn primary" id="resolveIncident">Confirmar restablecimiento</button>
+              <button class="btn" id="clearHistory">Limpiar historial</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel" style="margin-top:18px">
+          <div class="panel-head">
+            <h2>Registro de caídas</h2>
+            <span class="badge manual"><span class="dot"></span><span id="incidentCount">0 incidentes</span></span>
+          </div>
+          <div class="panel-body">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Servicio</th>
+                    <th>Problema</th>
+                    <th>Fuente</th>
+                    <th>Estado</th>
+                    <th>Duración</th>
+                  </tr>
+                </thead>
+                <tbody id="incidentRows"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <aside>
+        <section class="panel">
+          <div class="panel-head">
+            <h2>Fuentes consultadas</h2>
+            <span class="badge manual"><span class="dot"></span>Gratis</span>
+          </div>
+          <div class="panel-body">
+            <div class="source-list" id="sourceList"></div>
+            <p class="footer-note">
+              Para evitar bloqueos, esta versión no scrapea X.com, Google ni Downdetector desde el navegador. Abre las consultas preparadas y registra la señal encontrada. El archivo JSON queda disponible con exportación manual.
+            </p>
+          </div>
+        </section>
+
+        <section class="panel" style="margin-top:18px">
+          <div class="panel-head"><h2>JSON actual</h2></div>
+          <div class="panel-body">
+            <textarea class="textarea" id="jsonPreview" readonly></textarea>
+          </div>
+        </section>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    const STORAGE_KEY = "whatsapp-monitor-incidents-v1";
+    const CHECK_KEY = "whatsapp-monitor-last-check-v1";
+
+    const sources = [
+      {
+        name: "X.com / hashtags",
+        detail: "Búsquedas preparadas por #WhatsAppDown, #SeCayoWhatsApp y caida whatsapp.",
+        url: "https://x.com/search?q=(%23WhatsAppDown%20OR%20%23SeCayoWhatsApp%20OR%20%22caida%20whatsapp%22%20OR%20%22se%20cayo%20whatsapp%22)&src=typed_query&f=live"
+      },
+      {
+        name: "Downdetector",
+        detail: "Reportes comunitarios de interrupciones del servicio.",
+        url: "https://downdetector.com/status/whatsapp/"
+      },
+      {
+        name: "Google Noticias",
+        detail: "Consulta pública de noticias recientes sobre caída de WhatsApp.",
+        url: "https://news.google.com/search?q=whatsapp%20caida%20OR%20whatsapp%20down%20when%3A1d&hl=es-419&gl=AR&ceid=AR%3Aes-419"
+      },
+      {
+        name: "Meta Status",
+        detail: "Estado público de servicios empresariales de Meta, útil para Business Platform.",
+        url: "https://metastatus.com/"
+      },
+      {
+        name: "Búsqueda web",
+        detail: "Consulta general para contrastar con medios y reportes públicos.",
+        url: "https://www.google.com/search?q=estado+de+whatsapp+ahora+caida"
+      }
+    ];
+
+    let incidents = loadIncidents();
+    let autoTimer = null;
+
+    const els = {
+      lastCheck: document.getElementById("lastCheck"),
+      checkNow: document.getElementById("checkNow"),
+      autoCheck: document.getElementById("autoCheck"),
+      exportJson: document.getElementById("exportJson"),
+      importJson: document.getElementById("importJson"),
+      resolveAll: document.getElementById("resolveAll"),
+      startIncident: document.getElementById("startIncident"),
+      resolveIncident: document.getElementById("resolveIncident"),
+      clearHistory: document.getElementById("clearHistory"),
+      serviceInput: document.getElementById("serviceInput"),
+      sourceInput: document.getElementById("sourceInput"),
+      problemInput: document.getElementById("problemInput"),
+      incidentRows: document.getElementById("incidentRows"),
+      incidentCount: document.getElementById("incidentCount"),
+      sourceList: document.getElementById("sourceList"),
+      jsonPreview: document.getElementById("jsonPreview"),
+      alertBox: document.getElementById("alertBox")
+    };
+
+    function nowIso() {
+      return new Date().toISOString();
+    }
+
+    function formatDate(iso) {
+      return new Intl.DateTimeFormat("es-AR", { dateStyle: "short" }).format(new Date(iso));
+    }
+
+    function formatTime(iso) {
+      return new Intl.DateTimeFormat("es-AR", { timeStyle: "medium" }).format(new Date(iso));
+    }
+
+    function formatDuration(ms) {
+      if (!ms || ms < 0) return "-";
+      const totalSeconds = Math.floor(ms / 1000);
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+      const parts = [];
+      if (hours) parts.push(`${hours} h`);
+      if (minutes || hours) parts.push(`${minutes} min`);
+      parts.push(`${seconds} s`);
+      return parts.join(" ");
+    }
+
+    function loadIncidents() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      } catch {
+        return [];
+      }
+    }
+
+    function saveIncidents() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(incidents));
+    }
+
+    function activeIncidents(service) {
+      return incidents.filter(item => item.status === "caida" && (item.service === service || item.service === "both"));
+    }
+
+    function setLastCheck(text) {
+      localStorage.setItem(CHECK_KEY, text);
+      els.lastCheck.textContent = text;
+    }
+
+    function serviceLabel(service) {
+      if (service === "personal") return "WhatsApp común";
+      if (service === "business") return "WhatsApp Business";
+      return "Ambos servicios";
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function renderSources() {
+      els.sourceList.innerHTML = sources.map(source => `
+        <article class="source">
+          <div>
+            <h3>${source.name}</h3>
+            <p>${source.detail}</p>
+          </div>
+          <div class="source-actions">
+            <button class="mini" data-open="${source.url}">Abrir</button>
+            <button class="mini bad" data-report="${source.name}">Hay caída</button>
+            <button class="mini ok" data-ok="${source.name}">Normal</button>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function renderStatus() {
+      ["personal", "business"].forEach(service => {
+        const card = document.querySelector(`[data-card="${service}"]`);
+        const badge = document.querySelector(`[data-badge="${service}"]`);
+        const state = document.querySelector(`[data-state="${service}"]`);
+        const start = document.querySelector(`[data-start="${service}"]`);
+        const duration = document.querySelector(`[data-duration="${service}"]`);
+        const active = activeIncidents(service);
+        const isDown = active.length > 0;
+        const first = active[0];
+
+        card.className = `status-card ${isDown ? "outage" : "normal"}`;
+        badge.className = `badge ${isDown ? "outage" : "normal"}`;
+        badge.innerHTML = `<span class="dot"></span><span>${isDown ? "Caída" : "Operativo"}</span>`;
+        state.textContent = isDown ? "Con problemas" : "Normal";
+        start.textContent = first ? `${formatDate(first.startedAt)} ${formatTime(first.startedAt)}` : "-";
+        duration.textContent = first ? formatDuration(Date.now() - new Date(first.startedAt).getTime()) : "-";
+      });
+
+      const anyDown = incidents.some(item => item.status === "caida");
+      els.alertBox.className = `alert ${anyDown ? "outage" : ""}`;
+      els.alertBox.querySelector(".alert-title").textContent = anyDown ? "Caída detectada" : "Sin caídas detectadas";
+      els.alertBox.querySelector(".alert-text").textContent = anyDown
+        ? "Hay un incidente activo. Al confirmar el restablecimiento, se calculará la duración total."
+        : "Cuando confirmes una caída desde alguna fuente, se guardará el incidente y se calculará el tiempo total al restablecerse.";
+    }
+
+    function renderIncidents() {
+      const sorted = [...incidents].sort((a, b) => new Date(b.startedAt) - new Date(a.startedAt));
+      els.incidentCount.textContent = `${incidents.length} ${incidents.length === 1 ? "incidente" : "incidentes"}`;
+      els.incidentRows.innerHTML = sorted.length ? sorted.map(item => `
+        <tr>
+          <td>${formatDate(item.startedAt)}</td>
+          <td>${formatTime(item.startedAt)}</td>
+          <td>${serviceLabel(item.service)}</td>
+          <td>${escapeHtml(item.problem)}</td>
+          <td>${escapeHtml(item.source)}</td>
+          <td>${item.status === "caida" ? "Caída" : "Restablecido"}</td>
+          <td>${item.endedAt ? formatDuration(new Date(item.endedAt) - new Date(item.startedAt)) : formatDuration(Date.now() - new Date(item.startedAt))}</td>
+        </tr>
+      `).join("") : `<tr><td colspan="7" class="empty">Todavía no hay caídas registradas.</td></tr>`;
+
+      els.jsonPreview.value = JSON.stringify({
+        updatedAt: nowIso(),
+        incidents: incidents.map(item => ({
+          fecha: formatDate(item.startedAt),
+          hora: formatTime(item.startedAt),
+          servicio: serviceLabel(item.service),
+          problema: item.problem,
+          fuente: item.source,
+          estado: item.status,
+          inicio: item.startedAt,
+          restablecido: item.endedAt || null,
+          duracionMs: item.endedAt ? new Date(item.endedAt) - new Date(item.startedAt) : null,
+          duracion: item.endedAt ? formatDuration(new Date(item.endedAt) - new Date(item.startedAt)) : null
+        }))
+      }, null, 2);
+    }
+
+    function render() {
+      renderStatus();
+      renderIncidents();
+    }
+
+    function createIncident(sourceName) {
+      const problem = els.problemInput.value.trim() || "Posible caída o degradación del servicio";
+      incidents.push({
+        id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
+        service: els.serviceInput.value,
+        problem,
+        source: sourceName || els.sourceInput.value,
+        status: "caida",
+        startedAt: nowIso(),
+        endedAt: null
+      });
+      saveIncidents();
+      render();
+    }
+
+    function resolveIncidents(sourceName) {
+      const service = els.serviceInput.value;
+      const endedAt = nowIso();
+      incidents = incidents.map(item => {
+        const matchesService = service === "both" || item.service === service || item.service === "both";
+        if (item.status === "caida" && matchesService) {
+          return { ...item, status: "restablecido", endedAt, resolvedSource: sourceName || els.sourceInput.value };
+        }
+        return item;
+      });
+      saveIncidents();
+      render();
+    }
+
+    function exportJson() {
+      const blob = new Blob([els.jsonPreview.value], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `whatsapp-incidentes-${new Date().toISOString().slice(0, 10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    async function runFreeCheck() {
+      setLastCheck(`Chequeado ${new Intl.DateTimeFormat("es-AR", { dateStyle: "short", timeStyle: "short" }).format(new Date())}`);
+      try {
+        await fetch("https://www.whatsapp.com/favicon.ico", { mode: "no-cors", cache: "no-store" });
+      } catch {
+        incidents.push({
+          id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
+          service: "personal",
+          problem: "No se pudo alcanzar el sitio público de WhatsApp desde este navegador",
+          source: "Chequeo propio",
+          status: "caida",
+          startedAt: nowIso(),
+          endedAt: null
+        });
+        saveIncidents();
+      }
+      render();
+    }
+
+    els.sourceList.addEventListener("click", event => {
+      const openUrl = event.target.dataset.open;
+      const reportSource = event.target.dataset.report;
+      const okSource = event.target.dataset.ok;
+      if (openUrl) window.open(openUrl, "_blank", "noopener");
+      if (reportSource) createIncident(reportSource);
+      if (okSource) resolveIncidents(okSource);
+    });
+
+    els.checkNow.addEventListener("click", runFreeCheck);
+    els.startIncident.addEventListener("click", () => createIncident());
+    els.resolveIncident.addEventListener("click", () => resolveIncidents());
+    els.resolveAll.addEventListener("click", () => {
+      els.serviceInput.value = "both";
+      resolveIncidents("Restablecimiento manual");
+    });
+    els.exportJson.addEventListener("click", exportJson);
+    els.clearHistory.addEventListener("click", () => {
+      if (!confirm("¿Seguro que querés limpiar el historial local?")) return;
+      incidents = [];
+      saveIncidents();
+      render();
+    });
+    els.importJson.addEventListener("change", async event => {
+      const file = event.target.files[0];
+      if (!file) return;
+      const text = await file.text();
+      const data = JSON.parse(text);
+      incidents = Array.isArray(data) ? data : data.incidents || [];
+      incidents = incidents.map(item => ({
+        id: item.id || (crypto.randomUUID ? crypto.randomUUID() : String(Date.now())),
+        service: item.service || normalizeImportedService(item.servicio),
+        problem: item.problem || item.problema || "Incidente importado",
+        source: item.source || item.fuente || "Importado",
+        status: item.status || item.estado || "restablecido",
+        startedAt: item.startedAt || item.inicio || nowIso(),
+        endedAt: item.endedAt || item.restablecido || null
+      }));
+      saveIncidents();
+      render();
+    });
+    els.autoCheck.addEventListener("change", event => {
+      if (event.target.checked) {
+        runFreeCheck();
+        autoTimer = setInterval(runFreeCheck, 5 * 60 * 1000);
+      } else {
+        clearInterval(autoTimer);
+        autoTimer = null;
+      }
+    });
+
+    function normalizeImportedService(service) {
+      if (service === "WhatsApp común") return "personal";
+      if (service === "WhatsApp Business") return "business";
+      return "both";
+    }
+
+    renderSources();
+    els.lastCheck.textContent = localStorage.getItem(CHECK_KEY) || "Sin chequeos todavía";
+    render();
+    setInterval(renderStatus, 1000);
+  </script>
+</body>
+</html>
