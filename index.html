@@ -564,6 +564,48 @@
       localStorage.setItem(STORAGE_KEY, JSON.stringify(incidents));
     }
 
+    function normalizeIncident(item) {
+      return {
+        id: item.id || (crypto.randomUUID ? crypto.randomUUID() : String(Date.now())),
+        service: item.service || normalizeImportedService(item.servicio),
+        problem: item.problem || item.problema || "Incidente importado",
+        source: item.source || item.fuente || "Importado",
+        status: item.status || item.estado || "restablecido",
+        startedAt: item.startedAt || item.inicio || nowIso(),
+        endedAt: item.endedAt || item.restablecido || null,
+        resolvedSource: item.resolvedSource || item.fuenteRestablecimiento || null
+      };
+    }
+
+    async function loadRemoteData(showErrors = false) {
+      try {
+        const [incidentsResponse, statusResponse] = await Promise.all([
+          fetch(`data/incidents.json?ts=${Date.now()}`, { cache: "no-store" }),
+          fetch(`data/status.json?ts=${Date.now()}`, { cache: "no-store" })
+        ]);
+
+        if (!incidentsResponse.ok) throw new Error("No se pudo leer data/incidents.json");
+
+        const incidentsData = await incidentsResponse.json();
+        const statusData = statusResponse.ok ? await statusResponse.json() : null;
+        incidents = (incidentsData.incidents || incidentsData || []).map(normalizeIncident);
+        saveIncidents();
+
+        if (statusData?.updatedAt) {
+          setLastCheck(`GitHub Actions ${new Intl.DateTimeFormat("es-AR", { dateStyle: "short", timeStyle: "short" }).format(new Date(statusData.updatedAt))}`);
+        } else if (incidentsData.updatedAt) {
+          setLastCheck(`JSON ${new Intl.DateTimeFormat("es-AR", { dateStyle: "short", timeStyle: "short" }).format(new Date(incidentsData.updatedAt))}`);
+        }
+
+        render();
+      } catch (error) {
+        if (showErrors) {
+          setLastCheck(`No se pudo actualizar desde JSON: ${error.message}`);
+        }
+        render();
+      }
+    }
+
     function activeIncidents(service) {
       return incidents.filter(item => item.status === "caida" && (item.service === service || item.service === "both"));
     }
@@ -708,22 +750,7 @@
     }
 
     async function runFreeCheck() {
-      setLastCheck(`Chequeado ${new Intl.DateTimeFormat("es-AR", { dateStyle: "short", timeStyle: "short" }).format(new Date())}`);
-      try {
-        await fetch("https://www.whatsapp.com/favicon.ico", { mode: "no-cors", cache: "no-store" });
-      } catch {
-        incidents.push({
-          id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
-          service: "personal",
-          problem: "No se pudo alcanzar el sitio público de WhatsApp desde este navegador",
-          source: "Chequeo propio",
-          status: "caida",
-          startedAt: nowIso(),
-          endedAt: null
-        });
-        saveIncidents();
-      }
-      render();
+      await loadRemoteData(true);
     }
 
     els.sourceList.addEventListener("click", event => {
@@ -755,15 +782,7 @@
       const text = await file.text();
       const data = JSON.parse(text);
       incidents = Array.isArray(data) ? data : data.incidents || [];
-      incidents = incidents.map(item => ({
-        id: item.id || (crypto.randomUUID ? crypto.randomUUID() : String(Date.now())),
-        service: item.service || normalizeImportedService(item.servicio),
-        problem: item.problem || item.problema || "Incidente importado",
-        source: item.source || item.fuente || "Importado",
-        status: item.status || item.estado || "restablecido",
-        startedAt: item.startedAt || item.inicio || nowIso(),
-        endedAt: item.endedAt || item.restablecido || null
-      }));
+      incidents = incidents.map(normalizeIncident);
       saveIncidents();
       render();
     });
@@ -786,6 +805,7 @@
     renderSources();
     els.lastCheck.textContent = localStorage.getItem(CHECK_KEY) || "Sin chequeos todavía";
     render();
+    loadRemoteData();
     setInterval(renderStatus, 1000);
   </script>
 </body>
