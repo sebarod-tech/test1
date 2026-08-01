@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-01T04:29:20.082Z",
+  "updatedAt": "2026-08-01T07:03:25.867Z",
   "summary": "Chequeo automático ejecutado",
   "services": {
     "personal": {
@@ -21,7 +21,7 @@
     {
       "source": "Google Noticias RSS",
       "service": "personal",
-      "checkedAt": "2026-08-01T04:29:20.082Z",
+      "checkedAt": "2026-08-01T07:03:25.867Z",
       "status": "normal",
       "confidence": "baja",
       "url": "https://news.google.com/rss/search?q=%22whatsapp%20down%22%20OR%20%22whatsapp%20outage%22%20OR%20%22se%20cayo%20whatsapp%22%20OR%20%22caida%20whatsapp%22%20OR%20%22whatsapp%20no%20funciona%22%20when%3A1d&hl=es-419&gl=AR&ceid=AR:es-419"
@@ -29,7 +29,7 @@
     {
       "source": "Google Noticias RSS",
       "service": "business",
-      "checkedAt": "2026-08-01T04:29:20.082Z",
+      "checkedAt": "2026-08-01T07:03:25.867Z",
       "status": "normal",
       "confidence": "baja",
       "url": "https://news.google.com/rss/search?q=%22whatsapp%20business%20down%22%20OR%20%22whatsapp%20business%20outage%22%20OR%20%22whatsapp%20business%20platform%20outage%22%20OR%20%22whatsapp%20business%20no%20funciona%22%20when%3A1d&hl=es-419&gl=AR&ceid=AR:es-419"
@@ -37,7 +37,7 @@
     {
       "source": "Sitio público de WhatsApp",
       "service": "personal",
-      "checkedAt": "2026-08-01T04:29:20.082Z",
+      "checkedAt": "2026-08-01T07:03:25.867Z",
       "status": "normal",
       "confidence": "baja",
       "url": null
@@ -47,7 +47,7 @@
     {
       "service": "personal",
       "source": "Google Noticias RSS",
-      "checkedAt": "2026-08-01T04:29:20.082Z",
+      "checkedAt": "2026-08-01T07:03:25.867Z",
       "status": "normal",
       "confidence": "baja",
       "matches": [],
@@ -56,7 +56,7 @@
     {
       "service": "business",
       "source": "Google Noticias RSS",
-      "checkedAt": "2026-08-01T04:29:20.082Z",
+      "checkedAt": "2026-08-01T07:03:25.867Z",
       "status": "normal",
       "confidence": "baja",
       "matches": [],
@@ -65,7 +65,7 @@
     {
       "service": "personal",
       "source": "Sitio público de WhatsApp",
-      "checkedAt": "2026-08-01T04:29:20.082Z",
+      "checkedAt": "2026-08-01T07:03:25.867Z",
       "status": "normal",
       "confidence": "baja",
       "matches": []
