@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-03T21:18:00.473Z",
+  "updatedAt": "2026-08-03T22:28:36.856Z",
   "summary": "Chequeo automático ejecutado",
   "services": {
     "personal": {
@@ -7,7 +7,7 @@
       "status": "caida",
       "problem": "¿WhatsApp no funciona? Usuarios reportan caída masiva en México - El Siglo de Torreón",
       "startedAt": "2026-08-03T21:18:00.473Z",
-      "durationMs": 0
+      "durationMs": 4236383
     },
     "business": {
       "label": "WhatsApp Business",
@@ -21,7 +21,7 @@
     {
       "source": "Google Noticias RSS",
       "service": "personal",
-      "checkedAt": "2026-08-03T21:18:00.473Z",
+      "checkedAt": "2026-08-03T22:28:36.856Z",
       "status": "outage",
       "confidence": "media",
       "url": "https://news.google.com/rss/search?q=%22whatsapp%20down%22%20OR%20%22whatsapp%20outage%22%20OR%20%22se%20cayo%20whatsapp%22%20OR%20%22caida%20whatsapp%22%20OR%20%22whatsapp%20no%20funciona%22%20when%3A1d&hl=es-419&gl=AR&ceid=AR:es-419"
@@ -29,7 +29,7 @@
     {
       "source": "Google Noticias RSS",
       "service": "business",
-      "checkedAt": "2026-08-03T21:18:00.473Z",
+      "checkedAt": "2026-08-03T22:28:36.856Z",
       "status": "normal",
       "confidence": "baja",
       "url": "https://news.google.com/rss/search?q=%22whatsapp%20business%20down%22%20OR%20%22whatsapp%20business%20outage%22%20OR%20%22whatsapp%20business%20platform%20outage%22%20OR%20%22whatsapp%20business%20no%20funciona%22%20when%3A1d&hl=es-419&gl=AR&ceid=AR:es-419"
@@ -37,7 +37,7 @@
     {
       "source": "Sitio público de WhatsApp",
       "service": "personal",
-      "checkedAt": "2026-08-03T21:18:00.473Z",
+      "checkedAt": "2026-08-03T22:28:36.856Z",
       "status": "normal",
       "confidence": "baja",
       "url": null
@@ -47,7 +47,7 @@
     {
       "service": "personal",
       "source": "Google Noticias RSS",
-      "checkedAt": "2026-08-03T21:18:00.473Z",
+      "checkedAt": "2026-08-03T22:28:36.856Z",
       "status": "outage",
       "confidence": "media",
       "matches": [
@@ -67,7 +67,7 @@
     {
       "service": "business",
       "source": "Google Noticias RSS",
-      "checkedAt": "2026-08-03T21:18:00.473Z",
+      "checkedAt": "2026-08-03T22:28:36.856Z",
       "status": "normal",
       "confidence": "baja",
       "matches": [],
@@ -76,7 +76,7 @@
     {
       "service": "personal",
       "source": "Sitio público de WhatsApp",
-      "checkedAt": "2026-08-03T21:18:00.473Z",
+      "checkedAt": "2026-08-03T22:28:36.856Z",
       "status": "normal",
       "confidence": "baja",
       "matches": []
