@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-03T22:28:36.856Z",
+  "updatedAt": "2026-08-03T23:36:54.432Z",
   "summary": "Chequeo automático ejecutado",
   "services": {
     "personal": {
@@ -7,7 +7,7 @@
       "status": "caida",
       "problem": "¿WhatsApp no funciona? Usuarios reportan caída masiva en México - El Siglo de Torreón",
       "startedAt": "2026-08-03T21:18:00.473Z",
-      "durationMs": 4236383
+      "durationMs": 8333959
     },
     "business": {
       "label": "WhatsApp Business",
@@ -21,7 +21,7 @@
     {
       "source": "Google Noticias RSS",
       "service": "personal",
-      "checkedAt": "2026-08-03T22:28:36.856Z",
+      "checkedAt": "2026-08-03T23:36:54.432Z",
       "status": "outage",
       "confidence": "media",
       "url": "https://news.google.com/rss/search?q=%22whatsapp%20down%22%20OR%20%22whatsapp%20outage%22%20OR%20%22se%20cayo%20whatsapp%22%20OR%20%22caida%20whatsapp%22%20OR%20%22whatsapp%20no%20funciona%22%20when%3A1d&hl=es-419&gl=AR&ceid=AR:es-419"
@@ -29,7 +29,7 @@
     {
       "source": "Google Noticias RSS",
       "service": "business",
-      "checkedAt": "2026-08-03T22:28:36.856Z",
+      "checkedAt": "2026-08-03T23:36:54.432Z",
       "status": "normal",
       "confidence": "baja",
       "url": "https://news.google.com/rss/search?q=%22whatsapp%20business%20down%22%20OR%20%22whatsapp%20business%20outage%22%20OR%20%22whatsapp%20business%20platform%20outage%22%20OR%20%22whatsapp%20business%20no%20funciona%22%20when%3A1d&hl=es-419&gl=AR&ceid=AR:es-419"
@@ -37,7 +37,7 @@
     {
       "source": "Sitio público de WhatsApp",
       "service": "personal",
-      "checkedAt": "2026-08-03T22:28:36.856Z",
+      "checkedAt": "2026-08-03T23:36:54.432Z",
       "status": "normal",
       "confidence": "baja",
       "url": null
@@ -47,19 +47,19 @@
     {
       "service": "personal",
       "source": "Google Noticias RSS",
-      "checkedAt": "2026-08-03T22:28:36.856Z",
+      "checkedAt": "2026-08-03T23:36:54.432Z",
       "status": "outage",
       "confidence": "media",
       "matches": [
         {
-          "title": "¿WhatsApp no funciona? Usuarios reportan caída masiva en México - El Siglo de Torreón",
-          "link": "https://news.google.com/rss/articles/CBMitgFBVV95cUxOSHVvemV5V1NXMEs1MlAyQ1I4akY2XzgwZ1JHSDVveExLd0lKVG9VdTJMak02b3VlWU9kRHZzeXVpOVBCZEhqVnpfZ3FYQXFqUTNOQy1zM3F1Tm5YRXJyY0sySVpJUU4yNGtyckdXYlFfdXExbV9lMHZqaE1nOTR1bmZBTzY3WUZ0Vlc1UGg4M2RxU1VvXzFEWGs1Y19MX1p5SnhIZFJId3dWT1BrLVJZOUsybHdGdw?oc=5",
-          "pubDate": "2026-08-03T21:06:17.000Z"
+          "title": "Se cayó WhatsApp: miles de usuarios reportan fallas para enviar fotos - Canal26",
+          "link": "https://news.google.com/rss/articles/CBMitgFBVV95cUxOU2Z1bndJTksyTDhkQXRRWFdqWGNIYUFER2l2aE9PSi03V1daUHlaUlVfVE9CM0RmNmlNM052NzVvNTNFVk9RRnVsMW1DT01oclFzenlaX2I1dFFNSXNodmhYMEtwQng3bE0zaFpBT240Y2FjY3pTLXlzVmh1ZWhoS2xTV2QxQnBzS2JTalpnOGR0enRkZGdBTk1HQUtGZ3JMSmtZUm5FcmhFVWM5S1BuN1k0UlpoUQ?oc=5",
+          "pubDate": "2026-08-03T22:59:42.000Z"
         },
         {
-          "title": "¿Se cayó WhatsApp? Reportan fallas en la app hoy 3 de agosto - sdpnoticias",
-          "link": "https://news.google.com/rss/articles/CBMinwFBVV95cUxPVjBHXzJFeWZ0TTJNdlBXX1lFOC1sYW9GN09WaHMwM1JBMm1ZbWV6TXFGQ3FmQjJjRVRTX09QTmtqSkhRdF9RWGpSeElnNzhsQ0NBLWxGWk9idmtIVks4YnUtZU10SlQtYklZMnNZMXdSZnpDUDFqc2Z4ZlpHLWluRTlBenRrM29iWGNBaktYX2YzNkpmR2VYU1JTN2QweFU?oc=5",
-          "pubDate": "2026-08-03T20:54:38.000Z"
+          "title": "¿Se cayó WhatsApp? Usuarios reportan fallas en la app HOY 3 de agosto - Azteca Morelos",
+          "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxQRVp4dzl4WVhfTnJXRno3UTk5eFNYNWRsNXVwS05nS1hFa21wazNuT0xCT3lXYVdMMGpFUFlJUXNKQ0xGd1RqeGdWMzY3ZmZLMVY4V1ZJRDY5Ml84ekdHTk9JRW13OTZNckFmbWpwcVdTU3VOdjJnTC16NF9VdXZvSG9NRERnWlFZTElEM3VoT0JXdTNpbklVWlVsTkpsY2JVTWE4VzFVa1FyckFkUl9xU1NTdVpjel9WRW1ybkN1QUfSAcABQVVfeXFMUEVaeHc5eFlYX05yV0Z6N1E5OXhTWDVkbDV1cEtOZ0tYRWttcGszbk9MQk95V2FXTDBqRVBZSVFzSkNMRndUanhnVjM2N2ZmSzFWOFdWSUQ2OTJfOHpHR05PSUVtdzk2TXJBZm1qcHFXU1N1TnYyZ0wtejRfVXV2b0hvTUREZ1pRWUxJRDN1aE9CV3UzaW5JVVpVbE5KbGNiVU1hOFcxVWtRcnJBZFJfcVNTU3VaY3pfVkVtcm5DdUFH?oc=5",
+          "pubDate": "2026-08-03T22:07:12.000Z"
         }
       ],
       "url": "https://news.google.com/rss/search?q=%22whatsapp%20down%22%20OR%20%22whatsapp%20outage%22%20OR%20%22se%20cayo%20whatsapp%22%20OR%20%22caida%20whatsapp%22%20OR%20%22whatsapp%20no%20funciona%22%20when%3A1d&hl=es-419&gl=AR&ceid=AR:es-419"
@@ -67,7 +67,7 @@
     {
       "service": "business",
       "source": "Google Noticias RSS",
-      "checkedAt": "2026-08-03T22:28:36.856Z",
+      "checkedAt": "2026-08-03T23:36:54.432Z",
       "status": "normal",
       "confidence": "baja",
       "matches": [],
@@ -76,7 +76,7 @@
     {
       "service": "personal",
       "source": "Sitio público de WhatsApp",
-      "checkedAt": "2026-08-03T22:28:36.856Z",
+      "checkedAt": "2026-08-03T23:36:54.432Z",
       "status": "normal",
       "confidence": "baja",
       "matches": []
