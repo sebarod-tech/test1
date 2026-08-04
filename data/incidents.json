@@ -1,14 +1,15 @@
 {
-  "updatedAt": "2026-08-04T01:03:57.600Z",
+  "updatedAt": "2026-08-04T04:23:30.283Z",
   "incidents": [
     {
       "id": "personal-1785791880473",
       "service": "personal",
       "problem": "¿WhatsApp no funciona? Usuarios reportan caída masiva en México - El Siglo de Torreón",
       "source": "Google Noticias RSS",
-      "status": "caida",
+      "status": "restablecido",
       "startedAt": "2026-08-03T21:18:00.473Z",
-      "endedAt": null
+      "endedAt": "2026-08-04T04:23:30.283Z",
+      "resolvedSource": "Chequeo automático"
     }
   ]
 }
