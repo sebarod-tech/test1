@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-30T09:20:09.005Z",
+  "updatedAt": "2026-08-30T14:26:59.734Z",
   "summary": "Chequeo automático ejecutado",
   "services": {
     "personal": {
@@ -21,7 +21,7 @@
     {
       "source": "Google Noticias RSS",
       "service": "personal",
-      "checkedAt": "2026-08-30T09:20:09.005Z",
+      "checkedAt": "2026-08-30T14:26:59.734Z",
       "status": "unknown",
       "confidence": "baja",
       "url": null
@@ -29,7 +29,7 @@
     {
       "source": "Google Noticias RSS",
       "service": "business",
-      "checkedAt": "2026-08-30T09:20:09.005Z",
+      "checkedAt": "2026-08-30T14:26:59.734Z",
       "status": "unknown",
       "confidence": "baja",
       "url": null
@@ -37,7 +37,7 @@
     {
       "source": "Sitio público de WhatsApp",
       "service": "personal",
-      "checkedAt": "2026-08-30T09:20:09.005Z",
+      "checkedAt": "2026-08-30T14:26:59.734Z",
       "status": "normal",
       "confidence": "baja",
       "url": null
@@ -47,7 +47,7 @@
     {
       "service": "personal",
       "source": "Google Noticias RSS",
-      "checkedAt": "2026-08-30T09:20:09.005Z",
+      "checkedAt": "2026-08-30T14:26:59.734Z",
       "status": "unknown",
       "confidence": "baja",
       "error": "HTTP 503",
@@ -56,7 +56,7 @@
     {
       "service": "business",
       "source": "Google Noticias RSS",
-      "checkedAt": "2026-08-30T09:20:09.005Z",
+      "checkedAt": "2026-08-30T14:26:59.734Z",
       "status": "unknown",
       "confidence": "baja",
       "error": "HTTP 503",
@@ -65,7 +65,7 @@
     {
       "service": "personal",
       "source": "Sitio público de WhatsApp",
-      "checkedAt": "2026-08-30T09:20:09.005Z",
+      "checkedAt": "2026-08-30T14:26:59.734Z",
       "status": "normal",
       "confidence": "baja",
       "matches": []
