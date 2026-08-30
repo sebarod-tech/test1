@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-30T18:08:11.636Z",
+  "updatedAt": "2026-08-30T21:00:19.265Z",
   "summary": "Chequeo automático ejecutado",
   "services": {
     "personal": {
@@ -21,23 +21,23 @@
     {
       "source": "Google Noticias RSS",
       "service": "personal",
-      "checkedAt": "2026-08-30T18:08:11.636Z",
-      "status": "normal",
+      "checkedAt": "2026-08-30T21:00:19.265Z",
+      "status": "unknown",
       "confidence": "baja",
-      "url": "https://news.google.com/rss/search?q=%22whatsapp%20down%22%20OR%20%22whatsapp%20outage%22%20OR%20%22se%20cayo%20whatsapp%22%20OR%20%22caida%20whatsapp%22%20OR%20%22whatsapp%20no%20funciona%22%20when%3A1d&hl=es-419&gl=AR&ceid=AR:es-419"
+      "url": null
     },
     {
       "source": "Google Noticias RSS",
       "service": "business",
-      "checkedAt": "2026-08-30T18:08:11.636Z",
-      "status": "normal",
+      "checkedAt": "2026-08-30T21:00:19.265Z",
+      "status": "unknown",
       "confidence": "baja",
-      "url": "https://news.google.com/rss/search?q=%22whatsapp%20business%20down%22%20OR%20%22whatsapp%20business%20outage%22%20OR%20%22whatsapp%20business%20platform%20outage%22%20OR%20%22whatsapp%20business%20no%20funciona%22%20when%3A1d&hl=es-419&gl=AR&ceid=AR:es-419"
+      "url": null
     },
     {
       "source": "Sitio público de WhatsApp",
       "service": "personal",
-      "checkedAt": "2026-08-30T18:08:11.636Z",
+      "checkedAt": "2026-08-30T21:00:19.265Z",
       "status": "normal",
       "confidence": "baja",
       "url": null
@@ -47,25 +47,25 @@
     {
       "service": "personal",
       "source": "Google Noticias RSS",
-      "checkedAt": "2026-08-30T18:08:11.636Z",
-      "status": "normal",
+      "checkedAt": "2026-08-30T21:00:19.265Z",
+      "status": "unknown",
       "confidence": "baja",
-      "matches": [],
-      "url": "https://news.google.com/rss/search?q=%22whatsapp%20down%22%20OR%20%22whatsapp%20outage%22%20OR%20%22se%20cayo%20whatsapp%22%20OR%20%22caida%20whatsapp%22%20OR%20%22whatsapp%20no%20funciona%22%20when%3A1d&hl=es-419&gl=AR&ceid=AR:es-419"
+      "error": "HTTP 503",
+      "matches": []
     },
     {
       "service": "business",
       "source": "Google Noticias RSS",
-      "checkedAt": "2026-08-30T18:08:11.636Z",
-      "status": "normal",
+      "checkedAt": "2026-08-30T21:00:19.265Z",
+      "status": "unknown",
       "confidence": "baja",
-      "matches": [],
-      "url": "https://news.google.com/rss/search?q=%22whatsapp%20business%20down%22%20OR%20%22whatsapp%20business%20outage%22%20OR%20%22whatsapp%20business%20platform%20outage%22%20OR%20%22whatsapp%20business%20no%20funciona%22%20when%3A1d&hl=es-419&gl=AR&ceid=AR:es-419"
+      "error": "HTTP 503",
+      "matches": []
     },
     {
       "service": "personal",
       "source": "Sitio público de WhatsApp",
-      "checkedAt": "2026-08-30T18:08:11.636Z",
+      "checkedAt": "2026-08-30T21:00:19.265Z",
       "status": "normal",
       "confidence": "baja",
       "matches": []
